@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
+from services.gemini_service import score_lead
 
 app = FastAPI(
     title="FlowMind AI",
@@ -23,7 +24,13 @@ class Lead(BaseModel):
 
 @app.post("/lead")
 def create_lead(lead: Lead):
+
+    analysis = score_lead(
+        lead.message
+    )
+
     return {
         "success": True,
-        "lead": lead
+        "lead": lead,
+        "analysis": analysis
     }
