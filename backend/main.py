@@ -1,6 +1,8 @@
+import json
 from fastapi import FastAPI
 from pydantic import BaseModel
 from services.gemini_service import score_lead
+from services.storage_service import save_lead
 
 app = FastAPI(
     title="FlowMind AI",
@@ -29,8 +31,23 @@ def create_lead(lead: Lead):
         lead.message
     )
 
+    lead_data = {
+        "name": lead.name,
+        "email": lead.email,
+        "message": lead.message,
+        "analysis": analysis
+    }
+
+    save_lead(lead_data)
+
     return {
         "success": True,
         "lead": lead,
         "analysis": analysis
     }
+    
+@app.get("/leads")
+def get_leads():
+
+    with open("data/leads.json", "r") as f:
+        return json.load(f)
