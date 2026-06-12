@@ -3,7 +3,6 @@ import os
 
 FILE_PATH = "data/leads.json"
 
-
 def save_lead(data):
 
     os.makedirs("data", exist_ok=True)
@@ -11,8 +10,15 @@ def save_lead(data):
     leads = []
 
     if os.path.exists(FILE_PATH):
-        with open(FILE_PATH, "r") as f:
-            leads = json.load(f)
+        try:
+            with open(FILE_PATH, "r") as f:
+                leads = json.load(f)
+
+            if not isinstance(leads, list):
+                leads = []
+
+        except:
+            leads = []
 
     leads.append(data)
 

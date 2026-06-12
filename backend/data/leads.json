@@ -1,6 +1,14 @@
-{
-  "name": "John",
-  "email": "john@gmail.com",
-  "message": "I need an AI automation platform...",
-  "analysis": "Score: 75 Category: WARM"
-}
+[
+    {
+        "name": "John",
+        "email": "john@gmail.com",
+        "message": "I need an AI automation platform...",
+        "analysis": "Score: 75 Category: WARM"
+    },
+    {
+        "name": "Kaif",
+        "email": "kaif@test.com",
+        "message": "I need an AI automation solution for my company. Budget is $5000.",
+        "analysis": "Score: 60\nCategory: WARM"
+    }
+]

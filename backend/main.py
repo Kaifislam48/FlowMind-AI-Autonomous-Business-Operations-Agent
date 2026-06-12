@@ -1,8 +1,11 @@
 import json
+
 from fastapi import FastAPI
 from pydantic import BaseModel
+
 from services.gemini_service import score_lead
 from services.storage_service import save_lead
+from services.google_sheets_service import save_lead_to_sheet
 
 app = FastAPI(
     title="FlowMind AI",
@@ -27,9 +30,7 @@ class Lead(BaseModel):
 @app.post("/lead")
 def create_lead(lead: Lead):
 
-    analysis = score_lead(
-        lead.message
-    )
+    analysis = score_lead(lead.message)
 
     lead_data = {
         "name": lead.name,
@@ -39,6 +40,13 @@ def create_lead(lead: Lead):
     }
 
     save_lead(lead_data)
+
+    save_lead_to_sheet(
+        lead.name,
+        lead.email,
+        lead.message,
+        analysis
+    )
 
     return {
         "success": True,
